@@ -404,6 +404,23 @@ along with this software (see the LICENSE.md file). If not, see
         <field name="userPermissionId" type="id-long" is-pk="true"/>
         <field name="description" type="text-medium"/>
     </entity>
+    <entity entity-name="UserAuthcFactor" package="moqui.security" use="nontransactional">
+        <description>Use this entity for user-specific preferences (or properties). For default preferences use userId="_NA_".</description>
+        <field name="userId" type="id" is-pk="true"/>
+        <field name="fromDate" type="date-time" is-pk="true"/>
+        <field name="thruDate" type="date-time"/>
+        <field name="authcType" type="text-short"/>
+        <field name="authcOption" type="text-short"/>
+        <!-- TODO: make this encrypted! this is only meant to not be encrypted for dev -->
+        <field name="authcSecret" type="text-long" encrypt="false"/>
+        <relationship type="one-nofk" related="moqui.security.UserAccount" short-alias="user">
+            <description>No FK in order to allow externally authenticated users.</description></relationship>
+        <relationship type="one-nofk" title="AuthcTypeEnumId" related="moqui.basic.Enumeration" short-alias="keyEnum">
+            <key-map field-name="authcType"/></relationship>
+        <seed-data>
+            <moqui.basic.EnumerationType description="Authentication Type (should securely generate a one time password)" enumTypeId="AuthcTypeEnumId"/>
+        </seed-data>
+    </entity>
     <entity entity-name="UserPreference" package="moqui.security" use="configuration">
         <description>Use this entity for user-specific preferences (or properties). For default preferences use userId="_NA_".</description>
         <field name="userId" type="id" is-pk="true"/>

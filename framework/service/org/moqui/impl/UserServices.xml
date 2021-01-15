@@ -21,7 +21,7 @@ along with this software (see the LICENSE.md file). If not, see
         </in-parameters>
         <actions><script>ec.user.setPreference(preferenceKey, preferenceValue)</script></actions>
     </service>
-    
+
     <service verb="create" noun="UserAccount" authenticate="anonymous-all" allow-remote="false">
         <in-parameters>
             <auto-parameters entity-name="moqui.security.UserAccount" include="nonpk"><exclude field-name="currentPassword"/>
